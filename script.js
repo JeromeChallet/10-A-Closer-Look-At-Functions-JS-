@@ -1,21 +1,47 @@
 'use strict';
 
-/////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
-//returns a greeting
-const greet = function (greeting) {
-  return function (name) {
-    console.log(`${greeting} ${name}`);
-  };
+/////////////////////CALL AND APPLY METHOD/////////////////////
+const luftthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  book(flightNum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+    );
+    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+  },
 };
 
-const greeterHey = greet('hey');
-greeterHey('jerome'); // hey jerome
+luftthansa.book(239, 'Jerome Challet');
+luftthansa.book(635, 'john smith');
 
-greet('hello')('jerome'); // hello jerome
+const eurowings = {
+  name: 'eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
 
-//challenge
-const greetArr = greeting => name => console.log(`${greeting} ${name}`);
-greet('hello')('jerome'); // hello jerome
+const book = luftthansa.book;
+
+book(23, 'albert einstein');
+
+/////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
+//returns a greeting
+// const greet = function (greeting) {
+//   return function (name) {
+//     console.log(`${greeting} ${name}`);
+//   };
+// };
+
+// const greeterHey = greet('hey');
+// greeterHey('jerome'); // hey jerome
+
+// greet('hello')('jerome'); // hello jerome
+
+// //challenge
+// const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+// greet('hello')('jerome'); // hello jerome
 
 /////////////////////FUNCTIONS ACCEPTING CALLBACK FUNCTIONS/////////////////////
 //callback functions allow to create absctraction this we hide the complexity

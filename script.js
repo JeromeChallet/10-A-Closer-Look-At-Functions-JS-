@@ -1,38 +1,55 @@
 'use strict';
 
+/////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
+//returns a greeting
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+
+const greeterHey = greet('hey');
+greeterHey('jerome'); // hey jerome
+
+greet('hello')('jerome'); // hello jerome
+
+//challenge
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+greet('hello')('jerome'); // hello jerome
+
 /////////////////////FUNCTIONS ACCEPTING CALLBACK FUNCTIONS/////////////////////
 //callback functions allow to create absctraction this we hide the complexity
 //replaces spaces in a word
 // / /g will select all the spaces
-const oneWord = function (str) {
-  return str.replace(/ /g, '').toLowerCase();
-};
-//transforms the first word into uppercase
-const upperFirstWord = function (str) {
-  const [first, ...others] = str.split(' ');
-  return [first.toUpperCase(), ...others].join(' ');
-};
+// const oneWord = function (str) {
+//   return str.replace(/ /g, '').toLowerCase();
+// };
+// //transforms the first word into uppercase
+// const upperFirstWord = function (str) {
+//   const [first, ...others] = str.split(' ');
+//   return [first.toUpperCase(), ...others].join(' ');
+// };
 
-//higher order function
-const transformer = function (str, fn) {
-  //Javascript is awesome to learn
-  console.log('original string: ', str);
-  //JAVASCRIPT is awesome to learn
-  console.log(`Transformed string: ${fn(str)}`);
-  //Transformed by: upperFirstWord
-  console.log(`Transformed by: ${fn.name}`);
-};
+// //higher order function
+// const transformer = function (str, fn) {
+//   //Javascript is awesome to learn
+//   console.log('original string: ', str);
+//   //JAVASCRIPT is awesome to learn
+//   console.log(`Transformed string: ${fn(str)}`);
+//   //Transformed by: upperFirstWord
+//   console.log(`Transformed by: ${fn.name}`);
+// };
 
-transformer('Javascript is awesome to learn', upperFirstWord);
-transformer('Javascript is awesome to learn', oneWord);
+// transformer('Javascript is awesome to learn', upperFirstWord);
+// transformer('Javascript is awesome to learn', oneWord);
 
-const high5 = function () {
-  console.log('✋');
-};
+// const high5 = function () {
+//   console.log('✋');
+// };
 
-document.body.addEventListener('click', high5); //  ✋
+// document.body.addEventListener('click', high5); //  ✋
 
-['jerome', 'john', 'adam'].forEach(high5); // 3 x ✋
+// ['jerome', 'john', 'adam'].forEach(high5); // 3 x ✋
 
 /////////////////////VALUE VS REFERENCE/////////////////////
 // JS only passes by value not reference

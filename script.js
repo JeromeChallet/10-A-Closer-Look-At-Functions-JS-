@@ -3,7 +3,23 @@
 /////////////////////IMMEDIATLY INVOKED FUNCTION EXPRESSIONS IIFE/////////////////////
 // function that is only executed once then never again
 // we simply write the function expression itself without assigning it to any variable
-function(){console.log('this will run only once and never again');}
+// they are usefull for hiding variables in their scope for security or accidently overwritting the variables
+(function () {
+  console.log('this will run only once and never again');
+  const isPrivateIIFE = 23;
+})();
+
+() => console.log('this will run only once and never again')();
+
+// but using const in a block would achieve the same result
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+
+console.log(isPrivateIIFE); // wont be able to access
+console.log(isPrivate); // wont be able to access
+console.log(notPrivate); // will be able to access
 
 /////////////////////CALL AND APPLY METHOD/////////////////////
 // const luftthansa = {

@@ -14,3 +14,6 @@ objMethodName.call(objName, param1, param2)\
 objMethodName.apply(objName, paramArrayName)\
 objMethodName.bind(objName, paramName)\
 partial application\
+Immediatly Invoked Function Expressions\
+(function () {code to exe})();\
+() =>code to exe();\

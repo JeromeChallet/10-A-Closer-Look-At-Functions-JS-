@@ -1,117 +1,138 @@
 'use strict';
 
+/////////////////////IMMEDIATLY INVOKED FUNCTION EXPRESSIONS IIFE/////////////////////
+// function that is only executed once then never again
+// we simply write the function expression itself without assigning it to any variable
+// they are usefull for hiding variables in their scope for security or accidently overwritting the variables
+(function () {
+  console.log('this will run only once and never again');
+  const isPrivateIIFE = 23;
+})();
+
+() => console.log('this will run only once and never again')();
+
+// but using const in a block would achieve the same result
+{
+  const isPrivate = 23;
+  var notPrivate = 46;
+}
+
+console.log(isPrivateIIFE); // wont be able to access
+console.log(isPrivate); // wont be able to access
+console.log(notPrivate); // will be able to access
+
 /////////////////////CALL AND APPLY METHOD/////////////////////
-const luftthansa = {
-  airline: 'Lufthansa',
-  iataCode: 'LH',
-  bookings: [],
-  book(flightNum, name) {
-    console.log(
-      `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
-    );
-    this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
-  },
-};
+// const luftthansa = {
+//   airline: 'Lufthansa',
+//   iataCode: 'LH',
+//   bookings: [],
+//   book(flightNum, name) {
+//     console.log(
+//       `${name} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}`
+//     );
+//     this.bookings.push({ flight: `${this.iataCode}${flightNum}`, name });
+//   },
+// };
 
-luftthansa.book(239, 'Jerome Challet');
-luftthansa.book(635, 'john smith');
+// luftthansa.book(239, 'Jerome Challet');
+// luftthansa.book(635, 'john smith');
 
-const eurowings = {
-  airline: 'Eurowings',
-  iataCode: 'EW',
-  bookings: [],
-};
+// const eurowings = {
+//   airline: 'Eurowings',
+//   iataCode: 'EW',
+//   bookings: [],
+// };
 
-const book = luftthansa.book;
+// const book = luftthansa.book;
 
-// the this keyword depends on how a function is actually called
-// it's undefined cause this func is a regular function call
-// the this keyword points to undefined in regular functions
-// it's a copy of luftthansa.book but it's not a method anymore
-// it's a function
-book(23, 'albert einstein'); // cannot read prop airline of undefined
+// // the this keyword depends on how a function is actually called
+// // it's undefined cause this func is a regular function call
+// // the this keyword points to undefined in regular functions
+// // it's a copy of luftthansa.book but it's not a method anymore
+// // it's a function
+// book(23, 'albert einstein'); // cannot read prop airline of undefined
 
-// Call Method
-// to fix the above issue we need to sepcifically define "this"
-// with call, appply and bind
-book.call(eurowings, 23, 'albert einstein');
-book.call(luftthansa, 239, 'john doe');
+// // Call Method
+// // to fix the above issue we need to sepcifically define "this"
+// // with call, appply and bind
+// book.call(eurowings, 23, 'albert einstein');
+// book.call(luftthansa, 239, 'john doe');
 
-const swiss = {
-  airline: 'swiss air lines',
-  iatCode: 'LX',
-  bookings: [],
-};
+// const swiss = {
+//   airline: 'swiss air lines',
+//   iatCode: 'LX',
+//   bookings: [],
+// };
 
-book.call(swiss, 583, 'samuel jackson');
+// book.call(swiss, 583, 'samuel jackson');
 
-// Apply Method
-// the difference with call is that apply apply takes an array instead of a list of arg
-const flightData = [583, 'mr x'];
-book.apply(swiss, flightData);
+// // Apply Method
+// // the difference with call is that apply apply takes an array instead of a list of arg
+// const flightData = [583, 'mr x'];
+// book.apply(swiss, flightData);
 
-// using the ... is the same as the apply method above
-book.call(swiss, ...flightData);
+// // using the ... is the same as the apply method above
+// book.call(swiss, ...flightData);
 
 /////////////////////BIND METHOD/////////////////////
 // it returns a new function where the this keyowrd is bound
 // it will not use the book function but a new function
 // in which this will always be set to this
-const bookEW = book.bind(eurowings);
-const bookLW = book.bind(luftthansa);
-const bookLX = book.bind(swiss);
-bookEW(23, 'albert einstein');
+// const bookEW = book.bind(eurowings);
+// const bookLW = book.bind(luftthansa);
+// const bookLX = book.bind(swiss);
+// bookEW(23, 'albert einstein');
 
-// partial application is where a part of the argument is already applied
-const bookEW23 = book.bind(eurowings, 23);
-bookEW23('person1');
-bookEW23('person2');
-bookEW23('person3');
-bookEW23('person4');
+// // partial application is where a part of the argument is already applied
+// const bookEW23 = book.bind(eurowings, 23);
+// bookEW23('person1');
+// bookEW23('person2');
+// bookEW23('person3');
+// bookEW23('person4');
 
-// with event listeners
-luftthansa.planes = 300;
-//in an event handler function "this" always points to the element on which that handler is attached to
-//there "this" in this case is the button element
-// so we need to manually define "this" with bind because it will return a new function
-luftthansa.buyPlane = function () {
-  console.log(this); // returns the button
+// // with event listeners
+// luftthansa.planes = 300;
+// //in an event handler function "this" always points to the element on which that handler is attached to
+// //there "this" in this case is the button element
+// // so we need to manually define "this" with bind because it will return a new function
+// luftthansa.buyPlane = function () {
+//   console.log(this); // returns the button
 
-  this.planes++;
-  console.log(this.planes); //NaN
-};
+//   this.planes++;
+//   console.log(this.planes); //NaN
+// };
 
+// // document
+// //   .querySelector('.buy')
+// //   .addEventListener('click', luftthansa.buyPlane);
 // document
 //   .querySelector('.buy')
-//   .addEventListener('click', luftthansa.buyPlane);
-document
-  .querySelector('.buy')
-  .addEventListener('click', luftthansa.buyPlane.bind(luftthansa));
+//   .addEventListener('click', luftthansa.buyPlane.bind(luftthansa));
 
-// Partial application (we can preset parameters)
-const addTax = (rate, value) => value + value * rate;
-console.log(addTax(0.1, 200));
+// // Partial application (we can preset parameters)
+// const addTax = (rate, value) => value + value * rate;
+// console.log(addTax(0.1, 200));
 
-// here we reuse the addTax function but we change its first arg
-// we use bind on addTax to preset the rate
-// we can here calculate the VAT with whatever value we provide it
-//because we dont have to bother with "this" we don't need to define objName and set it to null instead
-// the important thing is we create a brand new specific function
-const addVAT = addTax.bind(null, 0.23);
-// addVAT = value => value + value * 0.23;
+// // here we reuse the addTax function but we change its first arg
+// // we use bind on addTax to preset the rate
+// // we can here calculate the VAT with whatever value we provide it
+// //because we dont have to bother with "this" we don't need to define objName and set it to null instead
+// // the important thing is we create a brand new specific function
+// const addVAT = addTax.bind(null, 0.23);
+// // addVAT = value => value + value * 0.23;
 
-console.log(addVAT(100));
-console.log(addVAT(23));
+// console.log(addVAT(100));
+// console.log(addVAT(23));
 
-// challenge function returning another function
-const addTaxRate = function (rate) {
-  return function (value) {
-    return value + value * rate;
-  };
-};
-const addVAT2 = addTaxRate(0.23);
-console.log(addVAT2(100));
-console.log(addVAT2(23));
+// // challenge function returning another function
+// const addTaxRate = function (rate) {
+//   return function (value) {
+//     return value + value * rate;
+//   };
+// };
+// const addVAT2 = addTaxRate(0.23);
+// console.log(addVAT2(100));
+// console.log(addVAT2(23));
 
 /////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
 //returns a greeting

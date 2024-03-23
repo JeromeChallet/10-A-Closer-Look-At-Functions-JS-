@@ -53,6 +53,28 @@ book.apply(swiss, flightData);
 // using the ... is the same as the apply method above
 book.call(swiss, ...flightData);
 
+/////////////////////BIND METHOD/////////////////////
+// it returns a new function where the this keyowrd is bound
+// it will not use the book function but a new function
+// in which this will always be set to this
+const bookEW = book.bind(eurowings);
+const bookLW = book.bind(luftthansa);
+const bookLX = book.bind(swiss);
+bookEW(23, 'albert einstein');
+
+// partial application is where a part of the argument is already applied
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('person1');
+bookEW23('person2');
+bookEW23('person3');
+bookEW23('person4');
+
+// with event listeners
+luftthansa.planes = 300;
+luftthansa.buyPlane = function () {
+  this.planes++;
+};
+
 /////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
 //returns a greeting
 // const greet = function (greeting) {

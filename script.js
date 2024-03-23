@@ -71,9 +71,47 @@ bookEW23('person4');
 
 // with event listeners
 luftthansa.planes = 300;
+//in an event handler function "this" always points to the element on which that handler is attached to
+//there "this" in this case is the button element
+// so we need to manually define "this" with bind because it will return a new function
 luftthansa.buyPlane = function () {
+  console.log(this); // returns the button
+
   this.planes++;
+  console.log(this.planes); //NaN
 };
+
+// document
+//   .querySelector('.buy')
+//   .addEventListener('click', luftthansa.buyPlane);
+document
+  .querySelector('.buy')
+  .addEventListener('click', luftthansa.buyPlane.bind(luftthansa));
+
+// Partial application (we can preset parameters)
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// here we reuse the addTax function but we change its first arg
+// we use bind on addTax to preset the rate
+// we can here calculate the VAT with whatever value we provide it
+//because we dont have to bother with "this" we don't need to define objName and set it to null instead
+// the important thing is we create a brand new specific function
+const addVAT = addTax.bind(null, 0.23);
+// addVAT = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+// challenge function returning another function
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
 
 /////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
 //returns a greeting

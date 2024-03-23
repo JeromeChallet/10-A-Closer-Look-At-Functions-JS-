@@ -53,6 +53,66 @@ book.apply(swiss, flightData);
 // using the ... is the same as the apply method above
 book.call(swiss, ...flightData);
 
+/////////////////////BIND METHOD/////////////////////
+// it returns a new function where the this keyowrd is bound
+// it will not use the book function but a new function
+// in which this will always be set to this
+const bookEW = book.bind(eurowings);
+const bookLW = book.bind(luftthansa);
+const bookLX = book.bind(swiss);
+bookEW(23, 'albert einstein');
+
+// partial application is where a part of the argument is already applied
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('person1');
+bookEW23('person2');
+bookEW23('person3');
+bookEW23('person4');
+
+// with event listeners
+luftthansa.planes = 300;
+//in an event handler function "this" always points to the element on which that handler is attached to
+//there "this" in this case is the button element
+// so we need to manually define "this" with bind because it will return a new function
+luftthansa.buyPlane = function () {
+  console.log(this); // returns the button
+
+  this.planes++;
+  console.log(this.planes); //NaN
+};
+
+// document
+//   .querySelector('.buy')
+//   .addEventListener('click', luftthansa.buyPlane);
+document
+  .querySelector('.buy')
+  .addEventListener('click', luftthansa.buyPlane.bind(luftthansa));
+
+// Partial application (we can preset parameters)
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// here we reuse the addTax function but we change its first arg
+// we use bind on addTax to preset the rate
+// we can here calculate the VAT with whatever value we provide it
+//because we dont have to bother with "this" we don't need to define objName and set it to null instead
+// the important thing is we create a brand new specific function
+const addVAT = addTax.bind(null, 0.23);
+// addVAT = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+// challenge function returning another function
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
+
 /////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
 //returns a greeting
 // const greet = function (greeting) {

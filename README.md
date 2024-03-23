@@ -11,3 +11,6 @@ const funcName = function(param1){\
 enhanced object literal syntax\
 methodName(){...}\
 objMethodName.call(objName, param1, param2)\
+objMethodName.apply(objName, paramArrayName)\
+objMethodName.bind(objName, paramName)\
+partial application\

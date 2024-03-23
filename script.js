@@ -17,14 +17,41 @@ luftthansa.book(239, 'Jerome Challet');
 luftthansa.book(635, 'john smith');
 
 const eurowings = {
-  name: 'eurowings',
+  airline: 'Eurowings',
   iataCode: 'EW',
   bookings: [],
 };
 
 const book = luftthansa.book;
 
-book(23, 'albert einstein');
+// the this keyword depends on how a function is actually called
+// it's undefined cause this func is a regular function call
+// the this keyword points to undefined in regular functions
+// it's a copy of luftthansa.book but it's not a method anymore
+// it's a function
+book(23, 'albert einstein'); // cannot read prop airline of undefined
+
+// Call Method
+// to fix the above issue we need to sepcifically define "this"
+// with call, appply and bind
+book.call(eurowings, 23, 'albert einstein');
+book.call(luftthansa, 239, 'john doe');
+
+const swiss = {
+  airline: 'swiss air lines',
+  iatCode: 'LX',
+  bookings: [],
+};
+
+book.call(swiss, 583, 'samuel jackson');
+
+// Apply Method
+// the difference with call is that apply apply takes an array instead of a list of arg
+const flightData = [583, 'mr x'];
+book.apply(swiss, flightData);
+
+// using the ... is the same as the apply method above
+book.call(swiss, ...flightData);
 
 /////////////////////FUNCTIONS RETURNING FUNCTIONS/////////////////////
 //returns a greeting

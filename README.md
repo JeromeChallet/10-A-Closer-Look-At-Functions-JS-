@@ -9,4 +9,5 @@ const funcName = function(param1){\
  return function(param2){...}\
 }\
 enhanced object literal syntax\
-methodName(){...}
+methodName(){...}\
+objMethodName.call(objName, param1, param2)\

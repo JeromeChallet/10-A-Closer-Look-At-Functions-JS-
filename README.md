@@ -17,3 +17,6 @@ partial application\
 Immediatly Invoked Function Expressions\
 (function () {code to exe})();\
 () =>code to exe();\
+Closures\
+console.dir(funcName)\
+[[Scopes]]\

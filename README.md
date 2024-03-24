@@ -20,3 +20,4 @@ Immediatly Invoked Function Expressions\
 Closures\
 console.dir(funcName)\
 [[Scopes]]\
+setTimout(funcName, timeLength)\

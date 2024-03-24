@@ -1,25 +1,43 @@
 'use strict';
 
+/////////////////////CLOSURES/////////////////////
+// a closure allows to remember all the variables that existed at the function's birthplace
+const secureBooking = function () {
+  let passengerCount = 0;
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+// despite the fact the secureBooking function has done executing,
+// we are able to return its process 3 times thanks to the closure
+booker(); //1 passenger
+booker(); //2 passenger
+booker(); //3 passenger
+
 /////////////////////IMMEDIATLY INVOKED FUNCTION EXPRESSIONS IIFE/////////////////////
 // function that is only executed once then never again
 // we simply write the function expression itself without assigning it to any variable
 // they are usefull for hiding variables in their scope for security or accidently overwritting the variables
-(function () {
-  console.log('this will run only once and never again');
-  const isPrivateIIFE = 23;
-})();
+// (function () {
+//   console.log('this will run only once and never again');
+//   const isPrivateIIFE = 23;
+// })();
 
-() => console.log('this will run only once and never again')();
+// () => console.log('this will run only once and never again')();
 
-// but using const in a block would achieve the same result
-{
-  const isPrivate = 23;
-  var notPrivate = 46;
-}
+// // but using const in a block would achieve the same result
+// {
+//   const isPrivate = 23;
+//   var notPrivate = 46;
+// }
 
-console.log(isPrivateIIFE); // wont be able to access
-console.log(isPrivate); // wont be able to access
-console.log(notPrivate); // will be able to access
+// console.log(isPrivateIIFE); // wont be able to access
+// console.log(isPrivate); // wont be able to access
+// console.log(notPrivate); // will be able to access
 
 /////////////////////CALL AND APPLY METHOD/////////////////////
 // const luftthansa = {

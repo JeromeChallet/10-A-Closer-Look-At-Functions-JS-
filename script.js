@@ -18,6 +18,11 @@ booker(); //1 passenger
 booker(); //2 passenger
 booker(); //3 passenger
 
+// we get the function itself
+// the closure is basically the variable environement of a function
+// [[Scopes]] the double bracket means it's an internal property we cannot access from our code
+console.dir(booker);
+
 /////////////////////IMMEDIATLY INVOKED FUNCTION EXPRESSIONS IIFE/////////////////////
 // function that is only executed once then never again
 // we simply write the function expression itself without assigning it to any variable

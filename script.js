@@ -1,27 +1,78 @@
 'use strict';
 
-/////////////////////CLOSURES/////////////////////
-// a closure allows to remember all the variables that existed at the function's birthplace
-const secureBooking = function () {
-  let passengerCount = 0;
-  return function () {
-    passengerCount++;
-    console.log(`${passengerCount} passengers`);
+/////////////////////MORE CLOSURE EXAAMPLES/////////////////////
+// example 1
+// we don't need to return a funciton from another function to create a closure
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
   };
 };
 
-const booker = secureBooking();
+// // a is 23 and f variables becomes a function
+// g();
+// // it can access the a variable even after g has finished its execution
+// // the a variable is inside the backpack of the f function
+// f(); //46
 
-// despite the fact the secureBooking function has done executing,
-// we are able to return its process 3 times thanks to the closure
-booker(); //1 passenger
-booker(); //2 passenger
-booker(); //3 passenger
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
 
-// we get the function itself
-// the closure is basically the variable environement of a function
-// [[Scopes]] the double bracket means it's an internal property we cannot access from our code
-console.dir(booker);
+g(); // 46
+f(); // 1554
+
+// re-assigning f function
+h(); // 777*2
+f(); // 1554
+console.dir(f);
+
+// Example 2 timer
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`we r boarding all ${n} passengers`);
+    console.log(`there a 3 groups each with ${perGroup} passengers`);
+  }, (wait = 1000));
+
+  // this consolelog will not wait for the 3 sec to finish
+  console.log(`wills tart boarding in ${wait} seconds`);
+};
+
+// the closure always contain the arguments which are local variables to the function
+// if it wasnt for the closure it would use this perGroup 1000 value
+const perGroup = 1000;
+boardPassengers(180, 3);
+
+/////////////////////CLOSURES/////////////////////
+// a closure allows to remember all the variables that existed at the function's birthplace
+// const secureBooking = function () {
+//   let passengerCount = 0;
+//   return function () {
+//     passengerCount++;
+//     console.log(`${passengerCount} passengers`);
+//   };
+// };
+
+// const booker = secureBooking();
+
+// // despite the fact the secureBooking function has done executing,
+// // we are able to return its process 3 times thanks to the closure
+// booker(); //1 passenger
+// booker(); //2 passenger
+// booker(); //3 passenger
+
+// // we get the function itself
+// // the closure is basically the variable environement of a function
+// // [[Scopes]] the double bracket means it's an internal property we cannot access from our code
+// console.dir(booker);
 
 /////////////////////IMMEDIATLY INVOKED FUNCTION EXPRESSIONS IIFE/////////////////////
 // function that is only executed once then never again
